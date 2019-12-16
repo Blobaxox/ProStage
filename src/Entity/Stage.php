@@ -31,6 +31,18 @@ class Stage
      */
     private $email;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise", inversedBy="mesStages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $monEntreprise;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="mesStages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $maFormation;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +80,30 @@ class Stage
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getMonEntreprise(): ?Entreprise
+    {
+        return $this->monEntreprise;
+    }
+
+    public function setMonEntreprise(?Entreprise $monEntreprise): self
+    {
+        $this->monEntreprise = $monEntreprise;
+
+        return $this;
+    }
+
+    public function getMaFormation(): ?Formation
+    {
+        return $this->maFormation;
+    }
+
+    public function setMaFormation(?Formation $maFormation): self
+    {
+        $this->maFormation = $maFormation;
 
         return $this;
     }
