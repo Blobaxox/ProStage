@@ -2,5 +2,9 @@
 
 
 {% block body %}
-<h1>Cette page affichera la liste des entreprises proposant un stage</h1>
-        {% endblock %}
+<ul>
+{% for entreprise in entreprises %}
+<li> <a href="/entreprises/{{ entreprise.getId() }}">{{ entreprise.getNom() }} </a> </li>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -2,6 +2,9 @@
 
 
 {% block body %}
-
-<h1>Cette page affichera la liste des formations de l'IUT</h1>
-        {% endblock %}
+<ul>
+{% for formation in formations %}
+<li> <a href="/formations/{{ formation.getId() }}">{{ formation.getNomLong() }} </a> </li>
+{% endfor %}
+</ul>
+{% endblock %}

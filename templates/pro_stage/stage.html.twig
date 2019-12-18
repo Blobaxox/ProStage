@@ -1,1 +1,13 @@
-<h1>Cette page affichera le descriptif du stage ayant pour identifiant {{idStage}}</h1>
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Stage de {{ stage.getTitre() }}</h1>
+Proposé par {{ stage.getEntreprise().getNom() }}, entreprise de {{ stage.getEntreprise().getActivite()}}
+pour le(s) formation(s) suivante(s) :
+<ul>
+{% for formation in stage.getFormations() %}
+<li> {{ formation.getNomLong }} </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

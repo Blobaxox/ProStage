@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Stage(s) pour {{ formation.getNomLong() }}</h1>
+
+{% for stage in formation.getStages() %}
+<li> <a href="/stage/{{ stage.getId() }}"> Stage de {{ stage.getTitre() }} </a> </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

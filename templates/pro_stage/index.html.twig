@@ -3,5 +3,10 @@
 {% block body %}
 
 <h1>Bienvenue sur la page d'accueil de Prostage</h1>
+<ul>
+{% for stage in stages %}
+<li> <a href="/stage/{{ stage.getId() }}"> stage de {{ stage.getTitre() }} proposé par {{ stage.getEntreprise.getNom }} </a> </li>
+{% endfor %}
+</ul>
 
 {% endblock %}
