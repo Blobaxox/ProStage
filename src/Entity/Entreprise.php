@@ -29,23 +29,23 @@ class Entreprise
     private $adresse;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $activite;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $site;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Stage", mappedBy="monEntreprise")
+     * @ORM\OneToMany(targetEntity="App\Entity\Stage", mappedBy="entreprise")
      */
-    private $mesStages;
+    private $stages;
 
     public function __construct()
     {
-        $this->mesStages = new ArrayCollection();
+        $this->stages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,7 +82,7 @@ class Entreprise
         return $this->activite;
     }
 
-    public function setActivite(?string $activite): self
+    public function setActivite(string $activite): self
     {
         $this->activite = $activite;
 
@@ -94,7 +94,7 @@ class Entreprise
         return $this->site;
     }
 
-    public function setSite(?string $site): self
+    public function setSite(string $site): self
     {
         $this->site = $site;
 
@@ -104,28 +104,28 @@ class Entreprise
     /**
      * @return Collection|Stage[]
      */
-    public function getMesStages(): Collection
+    public function getStages(): Collection
     {
-        return $this->mesStages;
+        return $this->stages;
     }
 
-    public function addMesStage(Stage $mesStage): self
+    public function addStage(Stage $stage): self
     {
-        if (!$this->mesStages->contains($mesStage)) {
-            $this->mesStages[] = $mesStage;
-            $mesStage->setMonEntreprise($this);
+        if (!$this->stages->contains($stage)) {
+            $this->stages[] = $stage;
+            $stage->setEntreprise($this);
         }
 
         return $this;
     }
 
-    public function removeMesStage(Stage $mesStage): self
+    public function removeStage(Stage $stage): self
     {
-        if ($this->mesStages->contains($mesStage)) {
-            $this->mesStages->removeElement($mesStage);
+        if ($this->stages->contains($stage)) {
+            $this->stages->removeElement($stage);
             // set the owning side to null (unless already changed)
-            if ($mesStage->getMonEntreprise() === $this) {
-                $mesStage->setMonEntreprise(null);
+            if ($stage->getEntreprise() === $this) {
+                $stage->setEntreprise(null);
             }
         }
 

@@ -21,16 +21,21 @@ class Formation
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $nomLong;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Stage", mappedBy="maFormation")
+     * @ORM\Column(type="string", length=50)
      */
-    private $mesStages;
+    private $nomCourt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Stage", mappedBy="formations")
+     */
+    private $stages;
 
     public function __construct()
     {
-        $this->mesStages = new ArrayCollection();
+        $this->stages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -38,14 +43,26 @@ class Formation
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getNomLong(): ?string
     {
-        return $this->nom;
+        return $this->nomLong;
     }
 
-    public function setNom(string $nom): self
+    public function setNomLong(string $nomLong): self
     {
-        $this->nom = $nom;
+        $this->nomLong = $nomLong;
+
+        return $this;
+    }
+
+    public function getNomCourt(): ?string
+    {
+        return $this->nomCourt;
+    }
+
+    public function setNomCourt(string $nomCourt): self
+    {
+        $this->nomCourt = $nomCourt;
 
         return $this;
     }
@@ -53,29 +70,26 @@ class Formation
     /**
      * @return Collection|Stage[]
      */
-    public function getMesStages(): Collection
+    public function getStages(): Collection
     {
-        return $this->mesStages;
+        return $this->stages;
     }
 
-    public function addMesStage(Stage $mesStage): self
+    public function addStage(Stage $stage): self
     {
-        if (!$this->mesStages->contains($mesStage)) {
-            $this->mesStages[] = $mesStage;
-            $mesStage->setMaFormation($this);
+        if (!$this->stages->contains($stage)) {
+            $this->stages[] = $stage;
+            $stage->addFormation($this);
         }
 
         return $this;
     }
 
-    public function removeMesStage(Stage $mesStage): self
+    public function removeStage(Stage $stage): self
     {
-        if ($this->mesStages->contains($mesStage)) {
-            $this->mesStages->removeElement($mesStage);
-            // set the owning side to null (unless already changed)
-            if ($mesStage->getMaFormation() === $this) {
-                $mesStage->setMaFormation(null);
-            }
+        if ($this->stages->contains($stage)) {
+            $this->stages->removeElement($stage);
+            $stage->removeFormation($this);
         }
 
         return $this;

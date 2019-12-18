@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,16 +34,20 @@ class Stage
     private $email;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise", inversedBy="mesStages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise", inversedBy="stages")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $monEntreprise;
+    private $entreprise;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="mesStages")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity="App\Entity\Formation", inversedBy="stages")
      */
-    private $maFormation;
+    private $formations;
+
+    public function __construct()
+    {
+        $this->formations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -84,26 +90,40 @@ class Stage
         return $this;
     }
 
-    public function getMonEntreprise(): ?Entreprise
+    public function getEntreprise(): ?Entreprise
     {
-        return $this->monEntreprise;
+        return $this->entreprise;
     }
 
-    public function setMonEntreprise(?Entreprise $monEntreprise): self
+    public function setEntreprise(?Entreprise $entreprise): self
     {
-        $this->monEntreprise = $monEntreprise;
+        $this->entreprise = $entreprise;
 
         return $this;
     }
 
-    public function getMaFormation(): ?Formation
+    /**
+     * @return Collection|Formation[]
+     */
+    public function getFormations(): Collection
     {
-        return $this->maFormation;
+        return $this->formations;
     }
 
-    public function setMaFormation(?Formation $maFormation): self
+    public function addFormation(Formation $formation): self
     {
-        $this->maFormation = $maFormation;
+        if (!$this->formations->contains($formation)) {
+            $this->formations[] = $formation;
+        }
+
+        return $this;
+    }
+
+    public function removeFormation(Formation $formation): self
+    {
+        if ($this->formations->contains($formation)) {
+            $this->formations->removeElement($formation);
+        }
 
         return $this;
     }
