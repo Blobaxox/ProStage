@@ -4,7 +4,7 @@
 {% block body %}
 <ul>
 {% for formation in formations %}
-<li> <a href="/formations/{{ formation.getId() }}">{{ formation.getNomLong() }} </a> </li>
+<li> <a href="/formations/{{ formation.getId() }}">{{ formation.getNomCourt }}( {{ formation.getNomLong() }} ) </a> </li>
 {% endfor %}
 </ul>
 {% endblock %}

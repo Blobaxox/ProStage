@@ -2,12 +2,15 @@
 
 {% block body %}
 <h1>Stage de {{ stage.getTitre() }}</h1>
-Proposé par {{ stage.getEntreprise().getNom() }}, entreprise de {{ stage.getEntreprise().getActivite()}}
-pour le(s) formation(s) suivante(s) :
+Proposé par {{ stage.getEntreprise().getNom() }}, entreprise de {{ stage.getEntreprise().getActivite()}} </br></br>
+Description :
+{{ stage.getDescription() }} </br></br>
+Concerne le(s) formation(s) suivante(s) :
 <ul>
 {% for formation in stage.getFormations() %}
-<li> {{ formation.getNomLong }} </li>
+<li> {{ formation.getNomCourt() }} </li>
 {% endfor %}
-</ul>
+</ul> </br>
+contact : {{ stage.getEmail() }}
 
 {% endblock %}
